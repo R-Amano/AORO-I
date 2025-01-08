@@ -29,10 +29,14 @@ Resource
 　┣AOR_Online_Free　：頻繁に更新される、UIなどの容量が小さなデータパック  
 　┗AOR_Online_Lock　：恒常的に使用される、容量の大きなデータパック  
   
-また、これらのフォルダーは公開しておりません。  
+なお、これらのフォルダは理由により現時点で公開しません。  
   
 Behavior/AOR_Online_Free/dialogue  
 　内容：NPCダイアログ  
+　非公開の事由：天乃涼介が著作権を持つシナリオが含まれるため  
+  
+Behavior/AOR_Online_Free/functions/story  
+　内容：シナリオ用関数コマンド  
 　非公開の事由：天乃涼介が著作権を持つシナリオが含まれるため  
   
 Resource/AOR_Online_Lock/textures  
