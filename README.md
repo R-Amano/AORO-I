@@ -42,3 +42,8 @@ Behavior/AOR_Online_Free/functions/story
 Resource/AOR_Online_Lock/textures  
 　内容：テクスチャ  
 　非公開の事由：天乃涼介が著作権を持つキャラクターイラストなどが含まれるため  
+  
+Resource/AOR_Online_Lock/sounds  
+　内容：BGM,SE  
+　非公開の事由：天乃涼介や第三者が著作権を持つ音声が含まれるため  
+  
