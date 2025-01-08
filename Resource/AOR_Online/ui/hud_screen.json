@@ -1,0 +1,556 @@
+{
+  "namespace": "hud",
+  
+  "root_panel/hud_title_text_area":{"ignored":true},
+  "root_panel/chat_stack/chat_panel":{"ignored":true},
+  "auto_save":{"ignored": true},
+
+  "heart_renderer":{"ignored":true},
+  "horse_heart_renderer":{"ignored":true},
+  "armor_renderer":{"ignored":true},
+  "hunger_renderer":{"ignored":true},
+  "bubbles_renderer":{"ignored":true},
+  "full_progress_bar":{"alpha":0},
+  "empty_progress_bar":{"alpha":0},
+  "progress_bar_nub":{"alpha":0},
+  "progress_text_label":{"text":""},
+
+  "root_panel/hud_actionbar_text_area":{"offset":[-200,0],"ignored":true},
+  
+  "aor_orb_label":{
+    "type":"label","ignored":true,
+    "anchor_from":"bottom_left",
+    "anchor_to":"bottom_left",
+    "text":"#level_number",
+    "bindings": [
+      {
+        "binding_name":"#level_number"
+      }
+    ]
+  },
+
+  "aor_progress_img":{
+    "type":"image",
+    "visible":"(not($aor_ac - $key = $aor_ac))",
+    "anchor_from":"bottom_middle",
+    "anchor_to":"bottom_middle",
+    "size":["100%",10],
+    "offset":[0,-45],
+    "texture":"('textures/aor/progress/' + $key)",
+    "controls":[
+      {
+        "text":{
+          "type":"label",
+          "anchor_from":"center",
+          "anchor_to":"center",
+          "offset":[0,-10],
+          "text":"§b採取中…"
+        }
+      }
+    ]
+  },
+
+  "aor_story_text":{
+    "type":"image",
+    "layer":29,
+    "visible":"(not($aor_ac - $story_key = $aor_ac))",
+    "anchor_from":"top_left",
+    "anchor_to":"top_left",
+    "size":["100%c+2px","100%c+4px"],
+    "offset":[8,18],
+    "alpha":0.8,
+    "texture":"textures/ui/Black",
+    "controls":[
+      {
+        "text":{
+          "type":"label",
+          "anchor_from":"top_left",
+          "anchor_to":"top_left",
+          "offset":[0,2],
+          "text":"$story_text"
+        }
+      }
+    ]
+  },
+
+  "aor_rank_text":{
+    "type":"image",
+    "layer":29,
+    "anchor_from":"top_left",
+    "anchor_to":"top_left",
+    "size":["100%c+5px","100%c+4px"],
+    "offset":[8,2],
+    "alpha":0.8,
+    "texture":"textures/ui/Black",
+    "controls":[
+      {
+        "rank_label":{
+          "type":"label",
+          "anchor_from":"center",
+          "anchor_to":"center",
+          "text":"('%.13s' * $aor_ac)"
+        }
+      }
+    ]
+  },
+
+  "aor_actionbar_content":{
+    "type":"panel",
+    "layer":25,
+    "$aor_ac":"$actionbar_text",
+    "$key":"p30",
+    "$story_key":"sxs",
+    "controls":[
+      {
+        "aor_status_panel":{
+          "type":"panel",
+          "layer":30,
+          "anchor_from":"top_right",
+          "anchor_to":"bottom_right",
+          "offset":[-10,15],
+          "$key":"\ue1370/0 ",
+          "$key2":"ank-99990",
+          "controls":[
+            {
+              "bg":{
+                "type":"image",
+                "layer":31,
+                "size":["100%sm+4px",14],
+                "anchor_from":"bottom_right",
+                "anchor_to":"bottom_right",
+                "offset":[2,2],
+                "alpha":0.8,
+                "texture":"textures/ui/Black"
+              }
+            },
+            {
+              "label":{
+                "type":"label",
+                "layer":32,
+                "anchor_from":"bottom_right",
+                "anchor_to":"bottom_right",
+                "text_alignment":"right",
+                "text":"($aor_ac - $key - $key2)"
+              }
+            }
+          ]
+        }
+      },
+      {"rank@aor_rank_text":{}},
+
+      {"p10@aor_progress_img":{"$key":"p10"}},
+      {"p11@aor_progress_img":{"$key":"p11"}},
+      {"p12@aor_progress_img":{"$key":"p12"}},
+      {"p13@aor_progress_img":{"$key":"p13"}},
+      {"p14@aor_progress_img":{"$key":"p14"}},
+      {"p15@aor_progress_img":{"$key":"p15"}},
+      {"p16@aor_progress_img":{"$key":"p16"}},
+      {"p17@aor_progress_img":{"$key":"p17"}},
+      {"p18@aor_progress_img":{"$key":"p18"}},
+      {"p19@aor_progress_img":{"$key":"p19"}},
+      {"p20@aor_progress_img":{"$key":"p20"}},
+
+      {"s1s@aor_story_text":{"$story_key":"s1s","$story_text":"\ue131研究センターへ行く"}},
+      {"s2s@aor_story_text":{"$story_key":"s2s","$story_text":"\ue131ミノル研究室を訪ねる"}},
+      {"s3s@aor_story_text":{"$story_key":"s3s","$story_text":"\ue131研究室を出て噴水へ向かう"}},
+      {"s4s@aor_story_text":{"$story_key":"s4s","$story_text":"\ue131いこいの広場へ行く"}},
+      {"s5s@aor_story_text":{"$story_key":"s5s","$story_text":"\ue131研究室へ戻る"}},
+      {"s7s@aor_story_text":{"$story_key":"s7s","$story_text":"\ue131研究ノートを開き\n\ue120「研究所の庭」を調査する"}},
+      {"s8s@aor_story_text":{"$story_key":"s8s","$story_text":"\ue131「フィールドワーク」に行く"}},
+      {"s9s@aor_story_text":{"$story_key":"s9s","$story_text":"\ue131全ての「採取ポイント」で採取する"}},
+      {"s10s@aor_story_text":{"$story_key":"s10s","$story_text":"\ue131フィールドワークを終了して\n\ue120ミノル研究室へ行く"}},
+      {"s11s@aor_story_text":{"$story_key":"s11s","$story_text":"\ue131研究ノートを進める"}},
+      {"s24s@aor_story_text":{"$story_key":"s24s","$story_text":"\ue131山頂を目指す\n\ue120§e描写距離16以上推奨"}}
+    ]
+  },
+
+  "aor_life_panel":{
+    "type":"panel",
+    "controls":[
+      {
+        "bars":{
+          "type":"image",
+          "anchor_from":"bottom_middle",
+          "anchor_to":"bottom_middle",
+          "size":["100%",10],
+          "offset":[0,-30],
+          "texture":"#texture",
+          "bindings": [
+            {
+              "binding_name":"#level_number"
+            },
+            {
+              "binding_type":"view",
+              "source_property_name":"((#level_number * 1) > 1299)",
+              "target_property_name":"#visible"
+            },
+            {
+              "binding_type":"view",
+              "source_property_name":"('textures/aor/bars/bar' + #level_number)",
+              "target_property_name":"#texture"
+            }
+          ]
+        }
+      }
+    ]
+  },
+
+  "stamp_panel":{
+    "type":"panel",
+    "controls":[
+      {
+        "sticker_img":{
+          "type":"image",
+          "size":["100%","18%"],
+          "anchor_from":"center",
+          "anchor_to":"center",
+          "offset":[0,"-30%"],
+          "texture":"#texture",
+          "anims": [
+            "@hud.anim_sticker_img_alpha_1",
+            "@hud.anim_sticker_img_size_1"
+          ],
+          "bindings":[
+            {
+              "binding_name":"#hud_title_text_string"
+            },
+            {
+              "binding_type":"view",
+              "source_property_name":"('textures/aor/stamp/' + #hud_title_text_string - $key)",
+              "target_property_name":"#texture"
+            }
+          ] 
+        }
+      }
+    ],
+    "bindings": [
+      {
+        "binding_name":"#hud_title_text_string"
+      },
+      {
+        "binding_type":"view",
+        "source_property_name":"(not(#hud_title_text_string - $key = #hud_title_text_string))",
+        "target_property_name":"#visible"
+      }
+    ]
+  },
+  "anim_sticker_img_alpha_1":{"anim_type":"alpha","duration":1,"easing":"out_quart","from":0,"to":1,"next":"@anim_sticker_img_alpha_2"},
+  "anim_sticker_img_alpha_2":{"anim_type":"wait", "duration":5,"next":"@anim_sticker_img_alpha_3"},
+  "anim_sticker_img_alpha_3":{"anim_type":"alpha","duration":3,"easing":"in_quart","from":1,"to":0,"destroy_at_end":"hud_title_text","end_event":"hud_title_text_complete"},
+  "anim_sticker_img_size_1":{"anim_type":"size","duration":1,"easing":"out_quart","from":["100% + 20px","18% + 20px"],"to":["100%","18%"]},
+
+  "card_panel":{
+    "$card":"card:",
+    "type":"panel",
+    "anchor_from":"center",
+    "anchor_to":"center",
+    "size":["100%-20px","100%-20px"],
+    "controls":[
+      {
+        "panel":{
+          "type":"panel",
+          "controls":[
+            {
+              "back":{
+                "type":"image",
+                "layer":1,
+                "size":["150%","150%"],
+                "texture":"textures/ui/Black",
+                "alpha":0.5
+              }
+            },
+            {
+              "right_img":{
+                "type":"image",
+                "layer":2,
+                "anchor_from":"center",
+                "anchor_to":"center",
+                "size":["130%","130%"],
+                "texture":"textures/aor/c/mima1",
+                "offset":["35%","30%"]
+              }
+            },
+            {
+              "label":{
+                "type":"label",
+                "layer":3,
+                "anchor_from":"bottom_middle",
+                "anchor_to":"bottom_middle",
+                "offset":[0,-17],
+                "text_alignment":"center",
+                "text":"§fジャンプで画面を閉じます"
+              }
+            },
+            {
+              "left_panel":{
+                "type":"stack_panel",
+                "layer":4,
+                "anchor_from":"top_left",
+                "anchor_to":"top_left",
+                "orientation":"vertical",
+                "size":["70%","100%"],
+                "controls":[
+                  {
+                    "logo":{
+                      "type":"image",
+                      "size":["100%","30%"],
+                      "texture":"textures/aor/ui/logo"
+                    }
+                  },
+                  {
+                    "panel":{
+                      "type":"panel",
+                      "size":["100%","70%-30px"],
+                      "controls":[
+                        {
+                          "back1":{
+                            "type":"image",
+                            "anchor_from":"top_left",
+                            "anchor_to":"top_left",
+                            "offset":[0,0],
+                            "size":["100%",54],
+                            "texture":"textures/aor/ui/back",
+                            "alpha":0.7
+                          }
+                        },
+                        {
+                          "back3":{
+                            "type":"image",
+                            "anchor_from":"top_left",
+                            "anchor_to":"top_left",
+                            "offset":[0,62],
+                            "size":["100%","100%-62px"],
+                            "texture":"textures/aor/ui/back",
+                            "alpha":0.7
+                          }
+                        },
+                        {
+                          "label":{
+                            "type":"label",
+                            "layer":6,
+                            "anchor_from":"top_left",
+                            "anchor_to":"top_left",
+                            "size":["100%-4px","200%"],
+                            "offset":[2,2],
+                            "text_alignment":"center",
+                            "line_padding":2,
+                            "text":"#text",
+                            "bindings":[
+                              {
+                                "binding_name":"#hud_title_text_string"
+                              },
+                              {
+                                "binding_type":"view",
+                                "source_property_name":"(#hud_title_text_string - $card)",
+                                "target_property_name":"#text"
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ],
+          "bindings": [
+            {
+              "binding_name":"#hud_title_text_string"
+            },
+            {
+              "binding_type":"view",
+              "source_property_name":"(not(#hud_title_text_string - $card = #hud_title_text_string))",
+              "target_property_name":"#visible"
+            }
+          ]
+        }
+      }
+    ]
+  },
+
+  "aor_title_content":{
+    "type":"panel",
+    "$key":"stamp:",
+    "$bar":"bar:",
+    "$card":"card:",
+    "controls":[
+      {
+        "stamp_panel@stamp_panel":{}
+      },
+      {
+        "bar_text":{
+          "type":"image",
+          "size":["120%","100%c + 4px"],
+          "anchor_from":"top_middle",
+          "anchor_to":"top_middle",
+          "offset":[0,40],
+          "texture":"textures/ui/Black",
+          "anims":["@hud.anim_ra_textbar_panel_bg_1"],
+          "controls":[
+            {
+              "label":{
+                "type":"label",
+                "anchor_from":"center",
+                "anchor_to":"center",
+                "text_alignment":"center",
+                "line_padding":1,
+                "text":"#text",
+                "anims":["@hud.anim_ra_textbar_panel_label_1"],
+                "bindings":[
+                  {
+                    "binding_name":"#hud_title_text_string"
+                  },
+                  {
+                    "binding_type":"view",
+                    "source_property_name":"(#hud_title_text_string - $bar)",
+                    "target_property_name":"#text"
+                  }
+                ]
+              }
+            }
+          ],
+          "bindings": [
+            {
+              "binding_name":"#hud_title_text_string"
+            },
+            {
+              "binding_type":"view",
+              "source_property_name":"(not(#hud_title_text_string - $bar = #hud_title_text_string))",
+              "target_property_name":"#visible"
+            }
+          ]
+        }
+      }
+    ]
+  },
+
+  "anim_ra_textbar_panel_label_1":{"anim_type":"alpha","duration":0.5,"easing":"out_quart","from":0,"to":1,"next":"@anim_ra_textbar_panel_label_2"},
+  "anim_ra_textbar_panel_label_2":{"anim_type":"wait", "duration":3,"next":"@anim_ra_textbar_panel_label_3"},
+  "anim_ra_textbar_panel_label_3":{"anim_type":"alpha","duration":2,"easing":"in_quart","from":1,"to":0},
+
+  "anim_ra_textbar_panel_bg_1":{"anim_type":"alpha","duration":0.5,"easing":"out_quart","from":0,"to":0.8,"next":"@anim_ra_textbar_panel_bg_2"},
+  "anim_ra_textbar_panel_bg_2":{"anim_type":"wait", "duration":3,"next":"@anim_ra_textbar_panel_bg_3"},
+  "anim_ra_textbar_panel_bg_3":{"anim_type":"alpha","duration":2,"easing":"in_quart","from":0.8,"to":0},
+
+  "aor_chat_grid_panel": {
+    "type":"panel",
+    "layer":1,
+    "size":["100%","100%c"],
+    "anchor_from":"bottom_left",
+    "anchor_to":"bottom_left",
+    "anims":["@hud.anim_aor_chat_grid_item_end"],
+    "controls": [
+      {
+        "chat_label": {
+          "type":"label",
+          "layer":31,
+          "text":"#text",
+          "size":["100%","default"],
+          "shadow":false,
+          "localize":false,
+          "font_type":"$chat_font_type",
+          "anims": [
+            "@hud.anim_aor_chat_txt_alpha_1",
+            "@hud.anim_aor_chat_grid_item_offset_1"
+          ],
+          "bindings": [
+            {
+              "binding_name": "#chat_text",
+              "binding_name_override": "#text",
+              "binding_type": "collection",
+              "binding_collection_name": "chat_text_grid",
+              "binding_condition": "once"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "anim_aor_chat_grid_item_end":{"anim_type":"wait","duration":5,"destroy_at_end":"chat_grid_item"},
+  "anim_aor_chat_grid_item_offset_1":{"anim_type":"offset","easing":"out_quart","duration":0.5,"from":[10,0],"to":[0,0],"next": "@anim_aor_chat_grid_item_offset_2"},
+  "anim_aor_chat_grid_item_offset_2":{"anim_type":"wait","duration":4,"next":"@anim_aor_chat_grid_item_offset_3"},
+  "anim_aor_chat_grid_item_offset_3":{"anim_type":"offset","easing":"in_quart","duration":0.5,"from":[0,0],"to":[10,0]},
+  "anim_aor_chat_txt_alpha_1":{"anim_type":"alpha","easing":"out_quart","duration":0.5,"from":0,"to":1,"next": "@anim_aor_chat_txt_alpha_2"},
+  "anim_aor_chat_txt_alpha_2":{"anim_type":"wait","duration":4,"next":"@anim_aor_chat_txt_alpha_3"},
+  "anim_aor_chat_txt_alpha_3":{"anim_type":"alpha","easing":"in_quart","duration":0.5,"from":1,"to":0},
+
+  "aor_chat_panel":{
+    "type":"panel",
+    "anchor_from":"bottom_left",
+    "anchor_to":"bottom_left",
+    "offset":[20,"-60%"],
+    "size":["50% - 100px","50%"],
+    "controls":[
+      {
+        "stack_panel":{
+          "type":"stack_panel",
+          "anchor_from":"bottom_left",
+          "anchor_to":"bottom_left",
+          "factory":{
+            "name":"chat_item_factory",
+            "max_children_size":5,
+            "control_ids":{"chat_item": "chat_item@hud.aor_chat_grid_panel"}
+          }
+        }
+      }
+    ]
+  },
+
+  "root_panel":{
+    "modifications":[
+      {
+        "array_name":"controls",
+        "operation":"insert_front",
+        "value":[
+          {
+            "aor_actionbar_factory":{
+              "type":"panel",
+              "factory":{
+                "name":"hud_actionbar_text_factory",
+                "control_ids":{"hud_actionbar_text":"aor_actionbar_content@hud.aor_actionbar_content"}
+              }
+            }
+          },
+          {
+            "aor_title_factory":{
+              "type":"panel",
+              "factory":{
+                "name":"hud_title_text_factory",
+                "control_ids":{"hud_title_text":"aor_title_content@hud.aor_title_content"}
+              }
+            }
+          },
+          {
+            "aor_chat_panel@aor_chat_panel":{}//新チャット
+          },
+          {
+            "aor_orb_label@aor_orb_label":{}//経験値デバック
+          },
+          {
+            "aor_life_panel@aor_life_panel":{}//スタミナバー
+          }
+        ]
+      }
+    ]
+  },
+  "hud_content":{
+    "modifications":[
+      {
+        "array_name":"controls",
+        "operation":"insert_front",
+        "value":[
+          {
+            "aor_card_title_factory":{
+              "type":"panel",
+              "factory":{
+                "name":"hud_title_text_factory",
+                "control_ids":{"hud_title_text":"card_panel@hud.card_panel"}
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,22 @@
+{
+	"format_version": "1.13.0",
+	"minecraft:client_entity": {
+		"description": {
+			"identifier": "ra:pc",
+			"materials": {
+				"default": "entity_alphatest"
+			},
+			"render_controllers": ["controller.render.default"],
+			"geometry": {
+        "default": "geometry.pc"
+      },
+			"textures": {
+				"default": "textures/entity/pc"
+			},
+			"spawn_egg": {
+				"base_color": "#00aa00",
+				"overlay_color": "#ffffff"
+			}
+		}
+	}
+}

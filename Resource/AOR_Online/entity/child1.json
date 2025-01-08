@@ -1,0 +1,22 @@
+{
+	"format_version": "1.13.0",
+	"minecraft:client_entity": {
+		"description": {
+			"identifier": "ra:child1",
+			"materials": {
+				"default": "entity_alphatest"
+			},
+			"render_controllers": ["controller.render.default"],
+			"geometry": {
+        "default": "geometry.child1"
+      },
+			"textures": {
+				"default": "textures/entity/child1"
+			},
+			"spawn_egg": {
+				"base_color": "#aa00aa",
+				"overlay_color": "#ffffff"
+			}
+		}
+	}
+}

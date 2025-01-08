@@ -1,0 +1,46 @@
+{
+  "namespace":"scoreboard",
+  "player_icon_panel":{"ignored":true},
+  "player_rank_panel":{"ignored":true},
+  "player_name":{"offset":[0,1],"shadow":false},
+  "list_objective_label":{"ignored":true},
+  "player_score":{
+    "offset":[0,1],
+    "shadow":false,
+    "text":"#text",
+    "bindings":[
+      {
+        "binding_name":"#player_score",
+        "binding_type":"collection",
+        "binding_collection_name":"$sb_collection_name"
+      },
+      {
+        "binding_type":"view",
+        "source_property_name":"('rank' + #player_score)",
+        "target_property_name":"#text"
+      }
+    ]
+  },
+
+  "player_details/name_panel/name":{"text_alignment":"center"},
+  "player_details/score_panel/score":{"text_alignment":"center"},
+  "scoreboard_player_list/permissions_button":{"ignored":true},
+  "player_panel": {
+    "type":"stack_panel",
+    "orientation":"horizontal",
+    "size":["100%",26],
+    "controls": [
+      {
+        "back":{
+          "type":"image",
+          "size":["100%","100%-2px"],
+          "alpha":0.5,
+          "texture":"textures/ui/Black",
+          "controls":[
+            {"player_content@scoreboard.player_content":{}}
+          ]
+        }
+      }
+    ]
+  }
+}

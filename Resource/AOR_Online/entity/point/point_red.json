@@ -1,0 +1,35 @@
+{
+	"format_version": "1.13.0",
+	"minecraft:client_entity": {
+		"description": {
+			"identifier": "ra:point_red",
+			"materials": {
+				"default": "entity_alphatest"
+			},
+			"render_controllers": ["controller.render.default"],
+			"scripts": {
+				"animate": [
+          "point"
+        ]
+			},
+			"geometry": {
+        "default": "geometry.point"
+      },
+			"textures": {
+				"default": "textures/aor/a/e"
+			},
+			"particle_effects":{
+        "ring1_red":"ra:ring1_red",
+				"ring2_red":"ra:ring2_red",
+				"flare_red":"ra:flare_red"
+      },
+			"animations": {
+        "point":"controller.animation.ra_particle"
+			},
+			"spawn_egg": {
+				"base_color": "#1f201f",
+				"overlay_color": "#ff0000"
+			}
+		}
+	}
+}

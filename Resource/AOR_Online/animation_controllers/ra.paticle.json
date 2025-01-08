@@ -1,0 +1,33 @@
+{
+	"format_version": "1.10.0",
+	"animation_controllers": {
+		"controller.animation.ra_particle": {
+			"initial_state":"run_particle",
+			"states": {
+				"run_particle": {
+					"particle_effects": [
+						{"effect":"ring1_red"},
+						{"effect":"ring2_red"},
+						{"effect":"flare_red"},
+
+						{"effect":"ring1_cyan"},
+						{"effect":"ring2_cyan"},
+						{"effect":"flare_cyan"},
+
+						{"effect":"ring1_green"},
+						{"effect":"ring2_green"},
+						{"effect":"flare_green"},
+						
+						{"effect":"ring1_blue"},
+						{"effect":"ring2_blue"},
+						{"effect":"flare_blue"},
+
+						{"effect":"ring1_yellow"},
+						{"effect":"ring2_yellow"},
+						{"effect":"flare_yellow"}
+					]
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,66 @@
+{
+  "namespace": "brewing_stand_pocket",
+  "brewing_out_slots/left_offset":{"ignored":true},
+  "brewing_out_slots/right_offset":{"ignored":true},
+
+  "aor_brewhint_pocket":{
+    "type":"panel",
+    "controls":[
+      {
+        "toggle@common_toggles.light_text_toggle":{
+          "anchor_from":"top_middle",
+          "anchor_to":"top_middle",
+          "offset": [0,2],
+          "$toggle_name":"word_toggle",
+          "$button_text":"注意",
+          "size":[40,20],
+          "$toggle_view_binding_name":"view_toggle"
+        }
+      },
+      {
+        "dialog@common_dialogs.main_panel_no_buttons": {
+          "layer": 64,
+          "size": ["80%","80%"],
+          "$text_name": "注意",
+          "$show_close_button":false,
+          "$child_control": "brewing_stand.aorBrew_dialog_scroll",
+          "bindings": [
+            {
+              "binding_type":"view",
+              "source_control_name":"view_toggle",
+              "source_property_name":"#toggle_state",
+              "target_property_name":"#visible"
+            }
+          ]
+        }
+      }
+    ]
+  },
+
+  "brewing_stand_panel/root_panel":{
+    "size":["85%","75%"]
+  },
+
+  "header_and_content_stack_panel":{
+    "bindings": [
+      {
+        "binding_type":"view",
+        "source_control_name":"view_toggle",
+        "source_property_name":"(not #toggle_state)",
+        "target_property_name":"#visible"
+      }
+    ]
+  },
+
+  "brewing_stand_panel": {
+    "modifications":[
+      {
+        "array_name":"controls",
+        "operation":"insert_front",
+        "value":[
+          {"aor_brewhint_pocket@aor_brewhint_pocket":{}}
+        ]
+      }
+    ]
+  }
+}

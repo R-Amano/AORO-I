@@ -1,0 +1,35 @@
+{
+	"format_version": "1.13.0",
+	"minecraft:client_entity": {
+		"description": {
+			"identifier": "ra:point_yellow",
+			"materials": {
+				"default": "entity_alphatest"
+			},
+			"render_controllers": ["controller.render.default"],
+			"scripts": {
+				"animate": [
+          "point"
+        ]
+			},
+			"geometry": {
+        "default": "geometry.point"
+      },
+			"textures": {
+				"default": "textures/aor/a/e"
+			},
+			"particle_effects":{
+        "ring1_yellow":"ra:ring1_yellow",
+				"ring2_yellow":"ra:ring2_yellow",
+				"flare_yellow":"ra:flare_yellow"
+      },
+			"animations": {
+        "point":"controller.animation.ra_particle"
+			},
+			"spawn_egg": {
+				"base_color": "#1f201f",
+				"overlay_color": "#ff0000"
+			}
+		}
+	}
+}

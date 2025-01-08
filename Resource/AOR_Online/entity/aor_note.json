@@ -1,0 +1,36 @@
+{
+	"format_version": "1.13.0",
+	"minecraft:client_entity": {
+		"description": {
+			"identifier": "ra:aor_note",
+			"materials": {
+				"default": "entity_alphatest"
+			},
+			"render_controllers": ["controller.render.default"],
+			"geometry": {
+        "default": "geometry.aor_note"
+      },
+			"textures": {
+				"default": "textures/entity/aor_note"
+			},
+			"scripts": {
+        "animate": [
+          "aor_note",
+					"point"
+        ]
+      },
+			"particle_effects":{
+        "ring1_cyan":"ra:ring1_cyan",
+				"ring2_cyan":"ra:ring2_cyan"
+      },
+			"animations": {
+        "aor_note":"animation.aor_note",
+				"point":"controller.animation.ra_particle"
+			},
+			"spawn_egg": {
+				"base_color": "#1f20ss",
+				"overlay_color": "#ff0022"
+			}
+		}
+	}
+}

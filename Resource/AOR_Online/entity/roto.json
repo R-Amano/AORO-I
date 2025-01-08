@@ -1,0 +1,22 @@
+{
+	"format_version": "1.13.0",
+	"minecraft:client_entity": {
+		"description": {
+			"identifier": "ra:roto",
+			"materials": {
+				"default": "entity_alphatest"
+			},
+			"render_controllers": ["controller.render.default"],
+			"geometry": {
+        "default": "geometry.roto"
+      },
+			"textures": {
+				"default": "textures/entity/roto"
+			},
+			"spawn_egg": {
+				"base_color": "#1f20ss",
+				"overlay_color": "#ff00ff"
+			}
+		}
+	}
+}

@@ -1,0 +1,17 @@
+{
+	"format_version":2,
+	"header":{
+		"name":"AORO=I Service Pack (Resource) 0.1.1",
+		"description":"(c) 天乃涼介 / 再配布禁止",
+		"uuid":"da64fbd0-eafb-4b93-9c56-6fe548ead125",
+		"version":[0,1,1],
+		"min_engine_version":[1,21,0]
+	},
+	"modules":[
+		{
+			"type":"resources",
+			"uuid":"a768a22d-60e1-4574-bebb-1e3f0feb687f",
+			"version":[1,0,0]
+		}
+	]
+}

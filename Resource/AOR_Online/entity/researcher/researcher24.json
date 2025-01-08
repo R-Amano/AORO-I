@@ -1,0 +1,22 @@
+{
+	"format_version": "1.13.0",
+	"minecraft:client_entity": {
+		"description": {
+			"identifier": "ra:researcher24",
+			"materials": {
+				"default": "entity_alphatest"
+			},
+			"render_controllers": ["controller.render.default"],
+			"geometry": {
+        "default": "geometry.researcher7"
+      },
+			"textures": {
+				"default": "textures/entity/researcher20"
+			},
+			"spawn_egg": {
+				"base_color": "#ffffff",
+				"overlay_color": "#ffffff"
+			}
+		}
+	}
+}

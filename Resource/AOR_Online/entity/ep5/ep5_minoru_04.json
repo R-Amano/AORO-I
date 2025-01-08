@@ -1,0 +1,22 @@
+{
+	"format_version": "1.13.0",
+	"minecraft:client_entity": {
+		"description": {
+			"identifier": "ra:ep5_minoru_04",
+			"materials": {
+				"default": "entity_alphatest"
+			},
+			"render_controllers": ["controller.render.default"],
+			"geometry": {
+        "default": "geometry.ep5_minoru_04"
+      },
+			"textures": {
+				"default": "textures/entity/minoru1"
+			},
+			"spawn_egg": {
+				"base_color": "#0099ff",
+				"overlay_color": "#ffffff"
+			}
+		}
+	}
+}

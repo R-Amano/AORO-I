@@ -1,0 +1,22 @@
+{
+	"format_version": "1.13.0",
+	"minecraft:client_entity": {
+		"description": {
+			"identifier": "ra:panel1",
+			"materials": {
+				"default": "entity_alphatest"
+			},
+			"render_controllers": ["controller.render.default"],
+			"geometry": {
+        "default": "geometry.panel"
+      },
+			"textures": {
+				"default": "textures/entity/panel1"
+			},
+			"spawn_egg": {
+				"base_color": "#ffffff",
+				"overlay_color": "#000000"
+			}
+		}
+	}
+}

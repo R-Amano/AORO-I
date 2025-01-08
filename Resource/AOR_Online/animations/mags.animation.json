@@ -1,0 +1,17 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"animation.mgs": {
+			"loop": true,
+			"animation_length": 3,
+			"bones": {
+				"stirrer": {
+					"rotation": {
+						"0.0": [0, 0, 0],
+						"3.0": [0, 3600, 0]
+					}
+				}
+			}
+		}
+	}
+}
