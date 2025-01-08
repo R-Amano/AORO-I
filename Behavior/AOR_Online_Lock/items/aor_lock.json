@@ -1,0 +1,21 @@
+{
+  "format_version": "1.21.10",
+  "minecraft:item": {
+    "description": {
+      "identifier": "aor:lock"
+    },
+    "components": {
+      "minecraft:icon": {
+        "textures": {
+          "default": "ender_eye"
+        }
+      },
+      "minecraft:max_stack_size": {
+        "value": 1
+      },
+      "minecraft:display_name": {
+        "value": "lock"
+      }
+    }
+  }
+}

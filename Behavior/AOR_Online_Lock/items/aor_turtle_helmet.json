@@ -1,0 +1,18 @@
+{
+  "format_version": "1.21.10",
+  "minecraft:item": {
+    "description": {
+      "identifier": "aor:turtle_helmet"
+    },
+    "components": {
+      "minecraft:icon": {
+        "textures": {
+          "default": "turtle_helmet"
+        }
+      },
+      "minecraft:display_name": {
+        "value": "item.turtle_helmet.name"
+      }
+    }
+  }
+}

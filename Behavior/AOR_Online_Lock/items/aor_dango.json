@@ -1,0 +1,18 @@
+{
+  "format_version":"1.20.50",
+  "minecraft:item":{
+    "description":{"identifier":"aor:dango"},
+    "components": {
+      "minecraft:icon":{"texture":"aor:dango"},
+      "minecraft:display_name":{"value":"aor:dango"},
+      "minecraft:use_animation":"eat",
+      "minecraft:food":{
+        "can_always_eat":false
+      },
+      "minecraft:use_modifiers":{
+        "use_duration":1.6,
+        "movement_modifier":0.35
+      }
+    }
+  }
+}

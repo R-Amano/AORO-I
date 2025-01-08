@@ -1,0 +1,17 @@
+{
+  "format_version": "1.20.50",
+  "minecraft:item": {
+    "description": {
+      "identifier": "aor:tell"
+    },
+    "components": {
+      "minecraft:icon": {
+        "texture": "aor:tell"
+      },
+      "minecraft:interact_button":true,
+      "minecraft:display_name":{
+        "value":"aor:tell"
+      }
+    }
+  }
+}

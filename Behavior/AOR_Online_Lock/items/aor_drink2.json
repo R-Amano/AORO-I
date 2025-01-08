@@ -1,0 +1,26 @@
+{
+  "format_version": "1.20.50",
+  "minecraft:item": {
+    "description": {
+      "identifier": "aor:drink2"
+    },
+    "components": {
+      "minecraft:icon": {
+        "texture": "aor:drink2"
+      },
+      "minecraft:display_name":{
+        "value":"aor:drink2"
+      },
+      "minecraft:use_animation": "drink",
+      "minecraft:food":{
+        "can_always_eat": true,
+        "nutrition" : 0,
+        "saturation_modifier": 0
+      },
+      "minecraft:use_modifiers": {
+        "use_duration": 1.6,
+        "movement_modifier": 0.35
+      }
+    }
+  }
+}

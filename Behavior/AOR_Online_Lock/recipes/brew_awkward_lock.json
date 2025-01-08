@@ -1,0 +1,15 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_brewing_mix": {
+    "description": {
+      "identifier": "aor:brew_awkward_lock"
+    },
+
+    "tags": [ "brewing_stand" ],
+
+    "input": "aor:lock",
+    "reagent": "aor:lock",
+    "output": "aor:lock"
+  }
+
+}

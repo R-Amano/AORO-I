@@ -1,0 +1,33 @@
+{
+	"format_version":2,
+	"header":{
+		"name":"AORO=I Service Pack LOCK (Behavior) 0.1.0",
+		"description":"§c取り外し禁止\n§f(c) 天乃涼介 / 再配布禁止",
+		"uuid":"12bae9a3-d3ba-47fd-8bc3-ff407d254900",
+		"version":[0,1,0],
+		"min_engine_version":[1,21,0]
+	},
+	"modules":[
+		{
+			"type":"data",
+			"version":[1,0,0],
+			"uuid":"3e18efe5-7445-4983-9ecb-c8a7b62ec298"
+		},
+		{
+			"type":"script",
+			"version":[1,0,0],
+			"uuid":"657d5e47-3126-49e5-a085-edc65a862b94",
+			"entry":"scripts/main.js"
+		}
+	],
+	"dependencies":[
+		{
+			"module_name":"@minecraft/server",
+			"version":"1.13.0"
+		},
+		{
+			"module_name":"@minecraft/server-ui",
+			"version":"1.2.0"
+		}
+	]
+}
