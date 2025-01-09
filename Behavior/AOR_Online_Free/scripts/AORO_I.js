@@ -104,14 +104,14 @@ system.afterEvents.scriptEventReceive.subscribe(e=>{//actionbar
 function aor_tellItem(e){
   let gameId="aor.text.tellItem_3b";
   if(world.scoreboard.getObjective("game.id").getScore(e)>0)gameId="aor.text.tellItem_3a";
-  const form = new ActionFormData()
+  new ActionFormData()
   .title("aor.text.tellItem_title")
   .button("aor.text.tellItem_1")//スタンプ
   .button("aor.text.tellItem_2")//倉庫
   .button(gameId)//脱出
   .button("aor.text.tellItem_4")//修復
-  .button("menu.options");
-  form.show(e).then((r)=>{
+  .button("menu.options")
+  .show(e).then((r)=>{
     if(r.selection==0)aor_stamp(e);
     if(r.selection==1)aor_item_list(e);
     if(r.selection==2){
@@ -124,12 +124,12 @@ function aor_tellItem(e){
 }
 
 function aor_fix(e){
-  const form = new ActionFormData()
+  new ActionFormData()
   .title("aor.text.tellItem_4")
   .body("スタンプが表示されない、研究ノートが開けない、カメラが戻らないなど異変を感じた場合はこの修復を実行してください。")
   .button("修復する")
-  .button("options.goBack");
-  form.show(e).then((r)=>{
+  .button("options.goBack")
+  .show(e).then((r)=>{
     if(r.selection==0){
       e.runCommandAsync(`camera @s clear`);
       e.runCommandAsync(`scoreboard players set @s note.p 0`);
@@ -147,12 +147,12 @@ function aor_option(e){
   let sound = false;
   if(e.hasTag("clock"))clock=true;
   if(e.hasTag("stamp"))sound=true;
-  const form = new ModalFormData();
-  form.title("menu.options");
-  form.toggle("時刻の表示",clock);
-  form.toggle("スタンプ通知音",sound);
-  form.submitButton("structure_block.mode.save");
-  form.show(e).then(r=> {
+  new ModalFormData()
+  .title("menu.options")
+  .toggle("時刻の表示",clock)
+  .toggle("スタンプ通知音",sound)
+  .submitButton("structure_block.mode.save")
+  .show(e).then(r=> {
     if (!r.canceled){ 
       if(!r.formValues[0]){
         e.runCommandAsync(`tag @s remove clock`);
@@ -169,14 +169,14 @@ function aor_option(e){
         e.runCommandAsync(`tellraw @s {"rawtext":[{"text":"\ue130§f"},{"translate":"aor.text.tellItem_sound_on"}]}`);
       }
     }
-});
+  });
 }
 
 function aor_discussion(e){
-  const form = new ModalFormData()
+  new ModalFormData()
   .title("aor.text.discussion_title")//ディスカッション
-  .textField("aor.text.discussion_1","aor.text.discussion_2");
-  form.show(e).then((r)=>{
+  .textField("aor.text.discussion_1","aor.text.discussion_2")
+  .show(e).then((r)=>{
     if(!r.canceled&&!r.formValues[0]=="")e.runCommandAsync(`tellraw @a[x=-253,y=66,z=264,r=6] {"rawtext":[{"text":"§b<"},{"selector":"@s"},{"text":">§f ${r.formValues[0].replace(/["\\`]/g,"")}"}]}`);
   });
 }
@@ -269,7 +269,7 @@ const materials = [
 ];
 
 function sl(ob,e,ma){
-  const sc=world.scoreboard.getObjective(ob).getScore(e)
+  const sc=world.scoreboard.getObjective(ob).getScore(e);
   if(ma==sc){
     return "§c"+sc;
   }else{
