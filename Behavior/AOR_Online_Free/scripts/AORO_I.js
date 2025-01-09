@@ -55,32 +55,23 @@ system.runInterval(()=>{
   const date=new Date();
   let hh=9+date.getHours();
   let mm=date.getMinutes();
-  let day=date.getDate();
   if(hh>23)hh-=24;
-  if(mm<10){
-    ow.runCommand(`scoreboard players set m0 World 0`);
-  }else{
-    ow.runCommand(`scoreboard players reset m0 World`);
-  }
+  (mm<10)?ow.runCommand(`scoreboard players set m0 World 0`):ow.runCommand(`scoreboard players reset m0 World`);
   ow.runCommand(`scoreboard players set hh World ${hh}`);
   ow.runCommand(`scoreboard players set mm World ${mm}`);
-  ow.runCommand(`scoreboard players set day World ${day}`);
+  ow.runCommand(`scoreboard players set day World ${date.getDate()}`);
   for(const e of world.getAllPlayers())e.nameTag=e.name+"\n§b"+(elements[-99990001-world.scoreboard.getObjective("status.rank").getScore(e)]||"中性子")+"§f";
 },200);
 
 system.afterEvents.scriptEventReceive.subscribe(e=>{//actionbar
   if(e.id=="aor:actionbar"){
-    let clockm="";
-    if(e.sourceEntity.hasTag("clock")){
-      clockm=`{"text":"\ue139"},{"score":{"name":"hh","objective":"World"}},{"text":":"},{"score":{"name":"m0","objective":"World"}},{"score":{"name":"mm","objective":"World"}},`;
-    }
     e.sourceEntity.runCommandAsync(
       `titleraw @s actionbar {"rawtext":[
       {"text":"rank"},{"score":{"name":"@s","objective":"status.rank"}},
       {"text":"\ns"},{"score":{"name":"@s","objective":"story"}},
       {"text":"s\np"},{"score":{"name":"@s","objective":"game.pos.bar"}},
       {"text":"\n\n\n\n\n\n\n\n\n\n"},
-      ${clockm}
+      ${(e.sourceEntity.hasTag("clock"))?`{"text":"\ue139"},{"score":{"name":"hh","objective":"World"}},{"text":":"},{"score":{"name":"m0","objective":"World"}},{"score":{"name":"mm","objective":"World"}},`:""}
       {"text":" \ue136"},{"score":{"name":"Players","objective":"World"}},
       {"text":" \ue137"},{"score":{"name":"@s","objective":"game.pos.count"}},{"text":"/"},{"score":{"name":"@s","objective":"game.pos.max"}},
       {"text":" \ue135"},{"score":{"name":"@s","objective":"status.orb"}},{"text":" "}]}`
@@ -88,18 +79,15 @@ system.afterEvents.scriptEventReceive.subscribe(e=>{//actionbar
   }
 })
 
-
 //forms
 function aor_tellItem(e){
-  let gameId="aor.text.tellItem_3b";
-  if(world.scoreboard.getObjective("game.id").getScore(e)>0)gameId="aor.text.tellItem_3a";
   new ActionFormData()
   .title("aor.text.tellItem_title")
   .button("aor.text.tellItem_1")//スタンプ
   .button("aor.text.tellItem_2")//倉庫
-  .button(gameId)//脱出
+  .button((world.scoreboard.getObjective("game.id").getScore(e)>0)?"aor.text.tellItem_3a":"aor.text.tellItem_3b")//脱出
   .button("aor.text.tellItem_4")//修復
-  .button("menu.options")
+  .button("menu.options")//設定
   .show(e).then(r=>{
     r.selection==0&&aor_stamp(e);
     r.selection==1&&aor_item_list(e);
@@ -132,14 +120,10 @@ function aor_fix(e){
 }
 
 function aor_option(e){
-  let clock = false;
-  let sound = false;
-  if(e.hasTag("clock"))clock=true;
-  if(e.hasTag("stamp"))sound=true;
   new ModalFormData()
   .title("menu.options")
-  .toggle("時刻の表示",clock)
-  .toggle("スタンプ通知音",sound)
+  .toggle("時刻の表示",e.hasTag("clock"))
+  .toggle("スタンプ通知音",e.hasTag("stamp"))
   .submitButton("structure_block.mode.save")
   .show(e).then(r=>{
     if(!r.canceled){ 
@@ -161,13 +145,9 @@ function aor_option(e){
   });
 }
 
-function aor_discussion(e){//ディスカッション
-  new ModalFormData().title("aor.text.discussion_title").textField("aor.text.discussion_1","aor.text.discussion_2").show(e).then(r=>!r.canceled&&!r.formValues[0]==""&&e.runCommandAsync(`tellraw @a[x=-253,y=66,z=264,r=6] {"rawtext":[{"text":"§b<"},{"selector":"@s"},{"text":">§f ${r.formValues[0].replace(/["\\`]/g,"")}"}]}`));
-}
-
 function tell_home(e){
-  if(e.hasTag("Discussion")){
-    aor_discussion(e);
+  if(e.hasTag("Discussion")){//ディスカッション
+    new ModalFormData().title("aor.text.discussion_title").textField("aor.text.discussion_1","aor.text.discussion_2").show(e).then(r=>!r.canceled&&!r.formValues[0]==""&&e.runCommandAsync(`tellraw @a[x=-253,y=66,z=264,r=6] {"rawtext":[{"text":"§b<"},{"selector":"@s"},{"text":">§f ${r.formValues[0].replace(/["\\`]/g,"")}"}]}`));
   }else{
     (e.hasTag("labo"))?aor_labo(e):aor_tellItem(e);
   }
@@ -205,8 +185,8 @@ function aor_stamp(e){
 }
 
 function aor_eventstamp(e){
-  const form = new ActionFormData()
-  form.title("イベントスタンプ")
+  const form = new ActionFormData();
+  form.title("イベントスタンプ");
   form.button("options.goBack");
   form.show(e).then(r=>{
     r.selection==0&&aor_stamp(e);
@@ -249,13 +229,9 @@ function sl(ob,e,ma){
 }
 
 function aor_item_list(e){
-  let datas="";
-  for(const ma of materials)datas+=ma[0]+" "+sl("item:"+ma[1],e,ma[2])+"/"+ma[2]+" "+ma[3]+"\n";
-  new ActionFormData()
-  .title("aor.text.tellItem_2")
-  .body(datas)
-  .button("options.goBack")
-  .show(e).then(r=>r.selection==0&&tell_home(e));
+  let texts="";
+  for(const ma of materials)texts+=ma[0]+" "+sl("item:"+ma[1],e,ma[2])+"/"+ma[2]+" "+ma[3]+"\n";
+  new ActionFormData().title("aor.text.tellItem_2").body(texts).button("options.goBack").show(e).then(r=>r.selection==0&&tell_home(e));
 }
 
 function aor_labo(e){
