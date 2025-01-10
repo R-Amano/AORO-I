@@ -16,6 +16,52 @@ const elements = [
   "111.レントゲニウム","112.コペルニシウム","113.ニホニウム","114.フレロビウム","115.モスコビウム","116.リバモリウム","117.テネシン","§e118.オガネソン"
 ];
 
+const materials = [
+  ["\ue162","nether_wart",8,"ネザーウォート"],
+  ["\ue163","blaze_powder",5,"ブレイズパウダー"],
+  ["\ue164","glistering_melon_slice",5,"輝くスイカの薄切り"],
+  ["\ue165","magma_cream",5,"マグマクリーム"],
+  ["\ue166","golden_carrot",5,"金のニンジン"],
+  ["\ue167","sugar",5,"砂糖"],
+  ["\ue168","rabbit_foot",5,"ウサギの足"],
+  ["\ue169","spider_eye",5,"クモの目"],
+  ["\ue16a","ghast_tear",5,"ガストの涙"],
+  ["\ue16b","pufferfish",5,"フグ"],
+  ["\ue16c","turtle_helmet",5,"カメの甲羅"],
+  ["\ue170","glowstone_dust",8,"グロウストーンダスト"],
+  ["\ue16e","redstone",8,"レッドストーン"],
+  ["\ue174","phantom_membrane",5,"ファントムの皮膜"],
+  ["\ue16d","gunpowder",8,"火薬"],
+  ["\ue16f","fermented_spider_eye",5,"発酵したクモの目"],
+  ["\ue171","dragon_breath",8,"ドラゴンブレス"],
+  ["\ue176","breeze_rod",5,"ブリーズロッド"],
+  ["\ue172","web",5,"クモの巣"],
+  ["\ue173","slime",5,"スライムブロック"],
+  ["\ue175","stone",5,"石"]
+];
+
+const stamps = [
+  ["aor_01","よろしく！"],
+  ["aor_14","おめでとう！"],
+  ["aor_10","ただいま戻りました！"],
+  ["aor_11","おかえりなさい！"],
+  ["aor_12","休憩行ってくるよ"],
+  ["aor_13","おつかれさまです！"],
+  ["aor_02","今日も研究日和だ"],
+  ["aor_03","写真いいですか？"],
+  ["aor_04","ええ構わないよ"],
+  ["aor_06","ありがとう"],
+  ["aor_05","ごめん……"],
+  ["aor_07","いってきます！"],
+  ["aor_08","気をつけてね"],
+  ["aor_09","無理はするなよ"]
+];
+
+function sl(ob,e,ma){//材料数関数
+  const sc=world.scoreboard.getObjective(ob).getScore(e);
+  return (ma==sc)?"§c"+sc:sc;
+}
+
 /*const banItem = [ //lock版更新時アンロック
   "minecraft:potion",
   "minecraft:lingering_potion",
@@ -52,6 +98,7 @@ world.afterEvents.itemUse.subscribe(e=>{
 
 system.runInterval(()=>{
   const ow=world.getDimension("overworld");
+  //時刻
   const date=new Date();
   let hh=9+date.getHours();
   let mm=date.getMinutes();
@@ -60,6 +107,7 @@ system.runInterval(()=>{
   ow.runCommand(`scoreboard players set hh World ${hh}`);
   ow.runCommand(`scoreboard players set mm World ${mm}`);
   ow.runCommand(`scoreboard players set day World ${date.getDate()}`);
+  //ランクネーム
   for(const e of world.getAllPlayers())e.nameTag=e.name+"\n§b"+(elements[-99990001-world.scoreboard.getObjective("status.rank").getScore(e)]||"中性子")+"§f";
 },200);
 
@@ -80,9 +128,8 @@ system.afterEvents.scriptEventReceive.subscribe(e=>{//actionbar
 })
 
 //forms
-function aor_tellItem(e){
-  new ActionFormData()
-  .title("aor.text.tellItem_title")
+function aor_tellItem(e){//通信機メインform
+  new ActionFormData().title("aor.text.tellItem_title")
   .button("aor.text.tellItem_1")//スタンプ
   .button("aor.text.tellItem_2")//倉庫
   .button((world.scoreboard.getObjective("game.id").getScore(e)>0)?"aor.text.tellItem_3a":"aor.text.tellItem_3b")//脱出
@@ -90,7 +137,11 @@ function aor_tellItem(e){
   .button("menu.options")//設定
   .show(e).then(r=>{
     r.selection==0&&aor_stamp(e);
-    r.selection==1&&aor_item_list(e);
+    if(r.selection==1){
+      let texts="";
+      for(const ma of materials)texts+=ma[0]+" "+sl("item:"+ma[1],e,ma[2])+"/"+ma[2]+" §r"+ma[3]+"\n";
+      new ActionFormData().title("aor.text.tellItem_2").body(texts).button("options.goBack").show(e).then(r=>r.selection==0&&tell_home(e));
+    }
     if(r.selection==2){
       e.runCommandAsync(`execute if score @s game.id matches 0 run tp -253 65 299 180 0`);
       e.runCommandAsync(`execute if score @s game.id matches 1.. unless score @s World.inout matches 0.. run scoreboard players set @s World.inout 1200`);
@@ -100,9 +151,8 @@ function aor_tellItem(e){
   });
 }
 
-function aor_fix(e){
-  new ActionFormData()
-  .title("aor.text.tellItem_4")
+function aor_fix(e){//修復form
+  new ActionFormData().title("aor.text.tellItem_4")
   .body("スタンプが表示されない、研究ノートが開けない、カメラが戻らないなど異変を感じた場合はこの修復を実行してください。")
   .button("修復する")
   .button("options.goBack")
@@ -119,9 +169,8 @@ function aor_fix(e){
   });
 }
 
-function aor_option(e){
-  new ModalFormData()
-  .title("menu.options")
+function aor_option(e){//設定form
+  new ModalFormData().title("menu.options")
   .toggle("時刻の表示",e.hasTag("clock"))
   .toggle("スタンプ通知音",e.hasTag("stamp"))
   .submitButton("structure_block.mode.save")
@@ -145,37 +194,23 @@ function aor_option(e){
   });
 }
 
-function tell_home(e){
-  if(e.hasTag("Discussion")){//ディスカッション
-    new ModalFormData().title("aor.text.discussion_title").textField("aor.text.discussion_1","aor.text.discussion_2").show(e).then(r=>!r.canceled&&!r.formValues[0]==""&&e.runCommandAsync(`tellraw @a[x=-253,y=66,z=264,r=6] {"rawtext":[{"text":"§b<"},{"selector":"@s"},{"text":">§f ${r.formValues[0].replace(/["\\`]/g,"")}"}]}`));
+function tell_home(e){//通信機form分岐
+  if(e.hasTag("Discussion")){
+    aor_discussion(e);
   }else{
     (e.hasTag("labo"))?aor_labo(e):aor_tellItem(e);
   }
 }
 
-//assets
-const stamps = [
-  ["aor_01","よろしく！"],
-  ["aor_14","おめでとう！"],
-  ["aor_10","ただいま戻りました！"],
-  ["aor_11","おかえりなさい！"],
-  ["aor_12","休憩行ってくるよ"],
-  ["aor_13","おつかれさまです！"],
-  ["aor_02","今日も研究日和だ"],
-  ["aor_03","写真いいですか？"],
-  ["aor_04","ええ構わないよ"],
-  ["aor_06","ありがとう"],
-  ["aor_05","ごめん……"],
-  ["aor_07","いってきます！"],
-  ["aor_08","気をつけてね"],
-  ["aor_09","無理はするなよ"]
-];
+function aor_discussion(e){//ディスカッションform
+  new ModalFormData().title("aor.text.discussion_title").textField("aor.text.discussion_1","aor.text.discussion_2").show(e).then(r=>!r.canceled&&!r.formValues[0]==""&&e.runCommandAsync(`tellraw @a[x=-253,y=66,z=264,r=6] {"rawtext":[{"text":"§b<"},{"selector":"@s"},{"text":">§f ${r.formValues[0].replace(/["\\`]/g,"")}"}]}`));
+}
 
+//stamps
 function aor_stamp(e){
-  const form = new ActionFormData();
-  form.title("aor.text.tellItem_1");
-  form.button("options.goBack");
-  form.button("イベントスタンプ");
+  const form = new ActionFormData().title("aor.text.tellItem_1")
+  .button("options.goBack")
+  .button("イベントスタンプ");
   for(const st of stamps)form.button(""+st[1],"textures/aor/stamp/"+st[0]);
   form.show(e).then(r=>{
     r.selection==0&&tell_home(e);
@@ -183,70 +218,29 @@ function aor_stamp(e){
     for(const s of stamps)r.selection==stamps.indexOf(s)+2&&aor_stamp_asset(e,s[0],s[1]);
   });
 }
-
 function aor_eventstamp(e){
-  const form = new ActionFormData();
-  form.title("イベントスタンプ");
-  form.button("options.goBack");
+  const form = new ActionFormData().title("イベントスタンプ")
+  .button("options.goBack");
   form.show(e).then(r=>{
     r.selection==0&&aor_stamp(e);
   });
 }
-
 function aor_stamp_asset(e,texture,text){
   e.runCommandAsync(`title @a[scores={mail=0}] title stamp:${texture}`);
   e.runCommandAsync(`execute as @a[tag=stamp] at @s run playsound random.orb`);
   e.runCommandAsync(`tellraw @a {"rawtext":[{"text":"§b<"},{"selector":"@s"},{"text":" のスタンプ> §f${text}"}]}`);
 }
 
-const materials = [
-  ["\ue162","nether_wart",8,"§rネザーウォート"],
-  ["\ue163","blaze_powder",5,"§rブレイズパウダー"],
-  ["\ue164","glistering_melon_slice",5,"§r輝くスイカの薄切り"],
-  ["\ue165","magma_cream",5,"§rマグマクリーム"],
-  ["\ue166","golden_carrot",5,"§r金のニンジン"],
-  ["\ue167","sugar",5,"§r砂糖"],
-  ["\ue168","rabbit_foot",5,"§rウサギの足"],
-  ["\ue169","spider_eye",5,"§rクモの目"],
-  ["\ue16a","ghast_tear",5,"§rガストの涙"],
-  ["\ue16b","pufferfish",5,"§rフグ"],
-  ["\ue16c","turtle_helmet",5,"§rカメの甲羅"],
-  ["\ue170","glowstone_dust",8,"§rグロウストーンダスト"],
-  ["\ue16e","redstone",8,"§rレッドストーン"],
-  ["\ue174","phantom_membrane",5,"§rファントムの皮膜"],
-  ["\ue16d","gunpowder",8,"§r火薬"],
-  ["\ue16f","fermented_spider_eye",5,"§r発酵したクモの目"],
-  ["\ue171","dragon_breath",8,"§rドラゴンブレス"],
-  ["\ue176","breeze_rod",5,"§rブリーズロッド"],
-  ["\ue172","web",5,"§rクモの巣"],
-  ["\ue173","slime",5,"§rスライムブロック"],
-  ["\ue175","stone",5,"§r石"]
-];
-
-function sl(ob,e,ma){
-  const sc=world.scoreboard.getObjective(ob).getScore(e);
-  return (ma==sc)?"§c"+sc:sc;
-}
-
-function aor_item_list(e){
-  let texts="";
-  for(const ma of materials)texts+=ma[0]+" "+sl("item:"+ma[1],e,ma[2])+"/"+ma[2]+" "+ma[3]+"\n";
-  new ActionFormData().title("aor.text.tellItem_2").body(texts).button("options.goBack").show(e).then(r=>r.selection==0&&tell_home(e));
-}
-
-function aor_labo(e){
-  const form = new ActionFormData();
-  form.title("aor.text.tellItem_2");
-  form.button("aor.text.tellItem_1");
+function aor_labo(e){//合成室form
+  const form = new ActionFormData().title("aor.text.tellItem_2").button("aor.text.tellItem_1");
   for(const ma of materials)form.button(ma[0]+" "+sl("item:"+ma[1],e,ma[2])+"/"+ma[2]+" "+ma[3]);
   form.show(e).then(r=>{
     r.selection==0&&aor_stamp(e);
-    for(const ma of materials)r.selection==materials.indexOf(ma)+1&&aor_labo_item(ma[1],ma[1]=="turtle_helmet");
+    for(const ma of materials)if(r.selection==materials.indexOf(ma)+1){
+      (ma[1]=="turtle_helmet")?e.runCommandAsync(`execute if score @s item:${ma[1]} matches 1.. run give @s aor:${ma[1]}`):e.runCommandAsync(`execute if score @s item:${ma[1]} matches 1.. run give @s ${ma[1]}`);
+      e.runCommandAsync(`execute if score @s item:${ma[1]} matches 1.. run scoreboard players remove @s item:${ma[1]} 1`);
+    }
   });
-  function aor_labo_item(id,tag){
-    (tag)?e.runCommandAsync(`execute if score @s item:${id} matches 1.. run give @s aor:${id}`):e.runCommandAsync(`execute if score @s item:${id} matches 1.. run give @s ${id}`);
-    e.runCommandAsync(`execute if score @s item:${id} matches 1.. run scoreboard players remove @s item:${id} 1`);
-  }
 }
 
 
