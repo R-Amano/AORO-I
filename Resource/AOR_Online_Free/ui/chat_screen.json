@@ -1,0 +1,15 @@
+{
+  "namespace":"chat",
+  "text_edit_box":{
+    //"ignored":true
+  },
+  "chat_header/title_panel/chat_header_content_area":{
+    //"ignored":true
+  },
+  "keyboard_button":{
+    //"ignored":true
+  },
+  "send_button":{
+    //"ignored":true
+  }
+}

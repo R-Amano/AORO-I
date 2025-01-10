@@ -1,0 +1,13 @@
+{
+  "namespace": "pause",
+  //"info_panel":{"ignored":true},
+  "menu_background/button_panel/realms_stories_button_panel":{"ignored":true},
+  "menu_background/button_panel/realms_stories":{"ignored":true},
+  "menu_background/button_panel/buy_button":{"ignored":true},
+  "menu_background/button_panel/buy":{"ignored":true},
+  "menu_background/button_panel/store_button_panel":{"ignored":true},
+  "menu_background/button_panel/server":{"ignored":true},
+  "invite_players_button_panel": {"ignored":true},
+  "the_icon_panel/stacked_column/feedback_btn": {"ignored":true},
+  "the_icon_panel/stacked_column/feedback_padding": {"ignored":true}
+}
