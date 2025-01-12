@@ -108,7 +108,13 @@ system.runInterval(()=>{
   ow.runCommand(`scoreboard players set mm World ${mm}`);
   ow.runCommand(`scoreboard players set day World ${date.getDate()}`);
   //ランクネーム
-  for(const e of world.getAllPlayers())e.nameTag=e.name+"\n§b"+(elements[-99990001-world.scoreboard.getObjective("status.rank").getScore(e)]||"中性子")+"§f";
+  for(const e of world.getAllPlayers()){
+    const score=world.scoreboard.getObjective("story").getScore(e.scoreboardIdentity);
+    let ex="";
+    if(score==28)ex="\ue161";
+    if(score==29)ex="\ue180";
+    e.nameTag=ex+e.name+"\n§b"+(elements[-99990001-world.scoreboard.getObjective("status.rank").getScore(e)]||"中性子")+"§f";
+  }
 },200);
 
 system.afterEvents.scriptEventReceive.subscribe(e=>{//actionbar
@@ -119,10 +125,10 @@ system.afterEvents.scriptEventReceive.subscribe(e=>{//actionbar
       {"text":"\ns"},{"score":{"name":"@s","objective":"story"}},
       {"text":"s\np"},{"score":{"name":"@s","objective":"game.pos.bar"}},
       {"text":"\n\n\n\n\n\n\n\n\n\n"},
-      ${(e.sourceEntity.hasTag("clock"))?`{"text":"\ue139"},{"score":{"name":"hh","objective":"World"}},{"text":":"},{"score":{"name":"m0","objective":"World"}},{"score":{"name":"mm","objective":"World"}},`:""}
-      {"text":" \ue136"},{"score":{"name":"Players","objective":"World"}},
-      {"text":" \ue137"},{"score":{"name":"@s","objective":"game.pos.count"}},{"text":"/"},{"score":{"name":"@s","objective":"game.pos.max"}},
-      {"text":" \ue135"},{"score":{"name":"@s","objective":"status.orb"}},{"text":" "}]}`
+      ${(e.sourceEntity.hasTag("clock"))?`{"text":"\ue139"},{"score":{"name":"hh","objective":"World"}},{"text":":"},{"score":{"name":"m0","objective":"World"}},{"score":{"name":"mm","objective":"World"}},{"text":" "},`:""}
+      ${(e.sourceEntity.hasTag("players"))?`{"text":" \ue136"},{"score":{"name":"Players","objective":"World"}},{"text":" "},`:""}
+      {"text":"\ue137"},{"score":{"name":"@s","objective":"game.pos.count"}},{"text":"/"},{"score":{"name":"@s","objective":"game.pos.max"}},{"text":" "},
+      {"text":"\ue135"},{"score":{"name":"@s","objective":"status.orb"}},{"text":" "}]}`
     );
   }
 })
@@ -173,6 +179,7 @@ function aor_option(e){//設定form
   new ModalFormData().title("menu.options")
   .toggle("時刻の表示",e.hasTag("clock"))
   .toggle("スタンプ通知音",e.hasTag("stamp"))
+  .toggle("参加者数の表示",e.hasTag("players"))
   .submitButton("structure_block.mode.save")
   .show(e).then(r=>{
     if(!r.canceled){ 
@@ -189,6 +196,13 @@ function aor_option(e){//設定form
       }else{
         e.runCommandAsync(`tag @s add stamp`);
         e.runCommandAsync(`tellraw @s {"rawtext":[{"text":"\ue130§f"},{"translate":"aor.text.tellItem_sound_on"}]}`);
+      }
+      if(!r.formValues[2]){
+        e.runCommandAsync(`tag @s remove players`);
+        e.runCommandAsync(`tellraw @s {"rawtext":[{"text":"\ue130§f"},{"translate":"参加者数を「表示しない」に変更しました"}]}`);
+      }else{
+        e.runCommandAsync(`tag @s add players`);
+        e.runCommandAsync(`tellraw @s {"rawtext":[{"text":"\ue130§f"},{"translate":"参加者数を「表示する」に変更しました"}]}`);
       }
     }
   });
@@ -233,7 +247,7 @@ function aor_stamp_asset(e,texture,text){
 
 function aor_labo(e){//合成室form
   const form = new ActionFormData().title("aor.text.tellItem_2").button("aor.text.tellItem_1");
-  for(const ma of materials)form.button(ma[0]+" "+sl("item:"+ma[1],e,ma[2])+"/"+ma[2]+" "+ma[3]);
+  for(const ma of materials)form.button(ma[0]+" "+sl("item:"+ma[1],e,ma[2])+"/"+ma[2]+"§r "+ma[3]);
   form.show(e).then(r=>{
     r.selection==0&&aor_stamp(e);
     for(const ma of materials)if(r.selection==materials.indexOf(ma)+1){
